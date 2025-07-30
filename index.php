@@ -49,10 +49,19 @@
 <body>
  <div class="container-fluid">
 <h1>Hotels</h1>
-  <form class="d-flex align-items-center gap-3" action="">
+  <form class="d-flex flex-column gap-3" action="">
+    <div>
+      <label  class="me-3" for="parking">Presenza parcheggio</label>
 <input type="checkbox" id="parking" name="parking">
-<label for="parking">Presenza parcheggio</label>
-<button class="btn btn-primary">Filtra</button>
+
+</div>
+<div >
+<label class="me-3" for="vote">Voto minimo:</label>
+<input type="number" id="vote" name="vote" min=1 max=5>
+</div>
+<div>
+<button class="btn btn-primary mb-3">Filtra</button>
+</div>
 </form>
 
 <?php 
@@ -62,6 +71,12 @@ if (isset($_GET["parking"]) && $_GET["parking"] == "on"){
   $parking_selected = true;
  
 }
+
+if(isset($_GET["vote"])){
+  $hotel_vote = $_GET["vote"];
+}
+
+
 ?>
    
 <table class="table">
@@ -82,6 +97,9 @@ if (isset($_GET["parking"]) && $_GET["parking"] == "on"){
       }
 
       }
+      if($hotel["vote"] < $hotel_vote ){
+continue;
+      }
       
       ?>
     <tr>
@@ -93,7 +111,12 @@ if (isset($_GET["parking"]) && $_GET["parking"] == "on"){
       <td><?php echo $hotel["distance_to_center"]?></td>
       
     </tr>
-    <?php }?>
+  
+    <?php }
+    
+    
+
+    ?>
   </tbody>
 </table>
 </div>
